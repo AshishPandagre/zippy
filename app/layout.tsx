@@ -1,6 +1,10 @@
+"use client";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { store } from "@/redux/store";
+import { Provider } from "react-redux";
+import { ReduxProvider } from "@/redux/provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -16,9 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
+        {/* <span>hey there..</span> */}
+        <ReduxProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
+          </ThemeProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
