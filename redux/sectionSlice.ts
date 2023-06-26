@@ -18,12 +18,27 @@ const initialState: SectionDataType = {
   },
 };
 
+interface MoveCardPayloadType {
+  source: { index: number; droppableId: string };
+  destination: { index: number; droppableId: string };
+}
+
 export const sectionSlice = createSlice({
   name: "section",
   initialState,
-  reducers: {},
+  reducers: {
+    moveCard: (state, action: PayloadAction<MoveCardPayloadType>) => {
+      const { droppableId: srcSection, index: srcIndex } =
+        action.payload.source;
+      const { droppableId: destSection, index: destIndex } =
+        action.payload.destination;
+      const taskId = state.byId[srcSection].taskIds[srcIndex];
+      state.byId[srcSection].taskIds.splice(srcIndex, 1);
+      state.byId[destSection].taskIds.splice(destIndex, 0, taskId);
+    },
+  },
 });
 
-export const {} = sectionSlice.actions;
+export const { moveCard } = sectionSlice.actions;
 
 export default sectionSlice.reducer;
